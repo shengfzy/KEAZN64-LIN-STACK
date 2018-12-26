@@ -1,0 +1,37 @@
+/*** GENERAL DEFINITION ***/
+LIN_node_config_file;
+
+/*** MCU DEFINITION ***/
+mcu {
+   mcu_name                      = SKEAZN642;
+   bus_clock                     = 40000000;                 /* Frequency bus of system Hz*/
+   xgate_support                 = no;                       /* Support XGATE Co-Processor */
+}
+
+/*** LIN HARDWARE DEFINITION ***/
+/* Uart config */
+uart {
+   iooi{
+      uart_channel               = 1;
+   }
+}
+
+/*** NETWORK DEFINITION ***/
+network {
+   idle_timeout                  = 5 s;
+   diagnostic_class              = 1;
+   resynchronization_support     = no;
+   autobaud_support              = no;
+   max_message_length            = 6;
+   LI0 {
+      node                       = Klima;                    /* Name of node described in LDF (must check consistence with LDF) */
+      file                       = "LDF_unity.ldf";          /* Name of LDF file */
+      device                     = iooi;
+      support_sid {
+         READ_BY_IDENTIFIER      = 0xb2;
+         ASSIGN_FRAME_ID_RANGE   = 0xb7;
+         ASSIGN_FRAME_IDENTIFIER = 0xb1;
+      }
+   }
+}
+

@@ -1,0 +1,91 @@
+/*---------GLOBAL DEFINITIONS-----------*/
+LIN_description_file;
+LIN_protocol_version             = "2.0";
+LIN_language_version             = "2.0";
+LIN_speed                        = 19.6 kbps;
+/* ----------NODE DEFINITIONS---------- */
+Nodes {
+   Master:
+      Klima,                                                 /* Master node name */
+      10.0 ms,                                               /* Time base */
+      0.9 ms;                                                /* Jitter */
+   Slaves:
+      aaaa;
+}
+/* ----------SIGNAL DEFINITIONS---------- */
+Signals {
+   /* Signal_name                : Size,       Init,            Publisher, Subscriber(s) */
+   a1                            :  8,        0x0,                Klima, aaaa;
+   error                         :  1,        0x0,                 aaaa, Klima;
+}
+/* ----------DIAGNOSTIC SIGNAL DEFINITIONS---------- */
+Diagnostic_signals {
+   /* MasterReq Reserved Signals */
+   MasterReqB0         :    8,   0;
+   MasterReqB1         :    8,   0;
+   MasterReqB2         :    8,   0;
+   MasterReqB3         :    8,   0;
+   MasterReqB4         :    8,   0;
+   MasterReqB5         :    8,   0;
+   MasterReqB6         :    8,   0;
+   MasterReqB7         :    8,   0;
+   /* SlaveResp Reserved Signals */
+   SlaveRespB0         :    8,   0;
+   SlaveRespB1         :    8,   0;
+   SlaveRespB2         :    8,   0;
+   SlaveRespB3         :    8,   0;
+   SlaveRespB4         :    8,   0;
+   SlaveRespB5         :    8,   0;
+   SlaveRespB6         :    8,   0;
+   SlaveRespB7         :    8,   0;
+}
+/* ----------UNCONDITIONAL FRAME DEFINITIONS---------- */
+Frames {
+   frame1              : 0x2e, Klima               ,    8 {
+      a1                  , 1;
+   }
+}
+/* ----------DIAGNOSTIC FRAME DEFINITIONS---------- */
+Diagnostic_frames {
+   MasterReq           : 0x3c {
+      MasterReqB0         , 0;
+      MasterReqB1         , 8;
+      MasterReqB2         , 16;
+      MasterReqB3         , 24;
+      MasterReqB4         , 32;
+      MasterReqB5         , 40;
+      MasterReqB6         , 48;
+      MasterReqB7         , 56;
+   }
+   SlaveResp           : 0x3d {
+      SlaveRespB0         , 0;
+      SlaveRespB1         , 8;
+      SlaveRespB2         , 16;
+      SlaveRespB3         , 24;
+      SlaveRespB4         , 32;
+      SlaveRespB5         , 40;
+      SlaveRespB6         , 48;
+      SlaveRespB7         , 56;
+   }
+}
+/* ----------NODE ATTRIBUTE DEFINITIONS---------- */
+Node_attributes {
+   aaaa {
+      LIN_protocol               = 2.0;                      /* Node protocol version */
+      configured_NAD             = 0x2e;                     /* configured NAD of node (1-125) */
+      product_id                 =    0x0,    0x0;           /* Product id */
+      response_error             = error;                    /* Response error signal */
+      P2_min                     = 50 ms;                    /* P2_min */
+      ST_min                     = 10 ms;                    /* ST_min */
+      configurable_frames {
+         frame1                  = 0x11D5;
+      }
+   }
+}
+/* ----------SCHEDULE TABLE DEFINITIONS---------- */
+Schedule_tables {
+   St_main {
+      frame1                              delay 10.0 ms;
+   }
+}
+
